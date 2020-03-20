@@ -16,5 +16,24 @@ export const getSmurfs = () => dispatch => {
   });
 };
 
+export const addSmurf = (values, history, setError) => dispatch => {
+  dispatch({
+    type: ADD_SMURF
+  });
+  axios
+    .post("/smurfs", values)
+    .then(({ data }) => {
+      dispatch({
+        type: SET_SMURFS,
+        payload: data
+      });
+      history.push("/");
+    })
+    .catch(({ response }) => {
+      setError("response", response.statusText, response.data.Error);
+    });
+};
+
+export const ADD_SMURF = "ADD_SMURF";
 export const GET_SMURFS = "GET_SMURFS";
 export const SET_SMURFS = "SET_SMURFS";
