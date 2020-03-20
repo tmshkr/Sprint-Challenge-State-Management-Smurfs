@@ -53,7 +53,27 @@ export const deleteSmurf = id => dispatch => {
     });
 };
 
+export const editSmurf = (values, id, history, setError) => dispatch => {
+  dispatch({
+    type: EDIT_SMURF,
+    payload: values
+  });
+  axios
+    .put(`/smurfs/${id}`, values)
+    .then(({ data }) => {
+      dispatch({
+        type: SET_SMURFS,
+        payload: data
+      });
+      history.push("/");
+    })
+    .catch(({ response }) => {
+      setError("response", response.statusText, response.data.Error);
+    });
+};
+
 export const ADD_SMURF = "ADD_SMURF";
 export const DELETE_SMURF = "DELETE_SMURF";
+export const EDIT_SMURF = "EDIT_SMURF";
 export const GET_SMURFS = "GET_SMURFS";
 export const SET_SMURFS = "SET_SMURFS";

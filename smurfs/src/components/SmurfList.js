@@ -46,7 +46,12 @@ function SmurfList(props) {
                 >
                   delete
                 </Button>
-                <Button size="sm">edit</Button>
+                <Button
+                  size="sm"
+                  onClick={() => history.push(`/smurfs/edit/${smurf.id}`)}
+                >
+                  edit
+                </Button>
               </td>
             </tr>
           ))}

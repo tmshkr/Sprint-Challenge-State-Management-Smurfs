@@ -16,6 +16,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSmurfs());
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -24,6 +25,7 @@ function App() {
         <Switch>
           <Route exact path="/smurfs" component={SmurfList} />
           <Route exact path="/smurfs/add" component={SmurfForm} />
+          <Route exact path="/smurfs/edit/:id" component={SmurfForm} />
           <Redirect to="/smurfs" />
         </Switch>
       </Router>

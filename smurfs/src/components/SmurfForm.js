@@ -1,18 +1,40 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Button, FormGroup, Label } from "reactstrap";
 
-import { addSmurf } from "../actions";
+import { addSmurf, editSmurf } from "../actions";
 
 function SmurfForm(props) {
-  const { history } = props;
   const dispatch = useDispatch();
-  const { handleSubmit, register, errors, setError } = useForm();
+  const { history, match } = props;
+  const { smurfs } = useSelector(state => state);
+  const { handleSubmit, register, errors, setError, setValue } = useForm();
+
+  const { id } = match.params;
+
+  useEffect(() => {
+    if (id) {
+      const match = smurfs.find(s => s.id === Number(id));
+      if (match) {
+        const values = [];
+        const smurf = { ...match }; // returns a reference to state, so make a copy
+        smurf.height = Number(smurf.height.slice(0, -2)); // remove "cm"
+        for (let key in smurf) {
+          values.push({ [key]: smurf[key] });
+        }
+        setValue(values);
+      }
+    }
+    // eslint-disable-next-line
+  }, [id, smurfs]);
 
   const onSubmit = values => {
     values.height = values.height + "cm";
-    dispatch(addSmurf(values, history, setError));
+
+    id
+      ? dispatch(editSmurf(values, id, history, setError))
+      : dispatch(addSmurf(values, history, setError));
   };
 
   return (
@@ -57,7 +79,7 @@ function SmurfForm(props) {
         <span className="error">{errors.height && errors.height.message}</span>
       </FormGroup>
       <Button type="submit" color="primary" size="lg" block>
-        Create Smurf
+        {id ? "Edit Smurf" : "Create Smurf"}
       </Button>
       <span className="error">
         {errors.response && errors.response.message}
