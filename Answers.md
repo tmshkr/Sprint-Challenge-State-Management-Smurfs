@@ -7,7 +7,7 @@ The Context API makes it easier to share data among components in an application
 
 With Redux, there is a `store` which acts as a central repository for the application's state, providing a single source of truth (SSOT) — i.e., a sole provider of information for the app, to which components in the app can refer in order to avoid bugs and errors that could be caused by inconsistent state coming from multiple components.
 
-The Redux `store` is modified by a reducer function, which creates a new state in response to actions, represented by an object with a `type` and an optional `payload`. The reducer function returns a new state for every action, so that the state in the `store` is not directly mutated.
+The Redux `store` is modified by a reducer function, which creates a new state in response to actions, which are represented by an object with a `type` and an optional `payload`. The reducer function returns a new state for every action, so that the state in the `store` is not directly mutated.
 
 ## What is the difference between Application state and Component state? When would be a good time to use one over the other?
 
@@ -15,7 +15,7 @@ Application state is global state, i.e., state that can be accessed throughout t
 
 ## Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
 
-`redux-thunk` is middleware for Redux that allows asynchronous actions, e.g., coming from network requests, to be dispatched to the Redux store. When using `redux-thunk`, action creators should be thunks, i.e., functions that return functions, which allows the `dispatch` function to be referenced asynchronously. For example:
+`redux-thunk` is middleware for Redux that allows asynchronous actions, e.g., actions coming from network requests, to be dispatched to the Redux store. When using `redux-thunk`, action creators should be thunks, i.e., an inner function returned from an outer function, which allows the `dispatch` function to be referenced asynchronously. For example:
 ```javascript
 export const getData = () => dispatch => {
   dispatch({
