@@ -18,7 +18,8 @@ export const getSmurfs = () => dispatch => {
 
 export const addSmurf = (values, history, setError) => dispatch => {
   dispatch({
-    type: ADD_SMURF
+    type: ADD_SMURF,
+    payload: values
   });
   axios
     .post("/smurfs", values)
@@ -34,6 +35,25 @@ export const addSmurf = (values, history, setError) => dispatch => {
     });
 };
 
+export const deleteSmurf = id => dispatch => {
+  dispatch({
+    type: DELETE_SMURF,
+    id
+  });
+  axios
+    .delete(`/smurfs/${id}`)
+    .then(({ data }) => {
+      dispatch({
+        type: SET_SMURFS,
+        payload: data
+      });
+    })
+    .catch(err => {
+      console.dir(err);
+    });
+};
+
 export const ADD_SMURF = "ADD_SMURF";
+export const DELETE_SMURF = "DELETE_SMURF";
 export const GET_SMURFS = "GET_SMURFS";
 export const SET_SMURFS = "SET_SMURFS";
