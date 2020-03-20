@@ -3,6 +3,7 @@ import { Button, Table } from "reactstrap";
 import { useSelector } from "react-redux";
 
 function SmurfList(props) {
+  const { history } = props;
   const { smurfs } = useSelector(state => state);
 
   if (!smurfs.length) return <div>Loading...</div>;
@@ -10,7 +11,11 @@ function SmurfList(props) {
   return (
     <div className="smurf-list">
       <header>
-        <Button className="add-smurf" color="primary">
+        <Button
+          className="add-smurf"
+          color="primary"
+          onClick={() => history.push("/smurfs/add")}
+        >
           Add Smurf
         </Button>
         <h2>Smurf List</h2>
