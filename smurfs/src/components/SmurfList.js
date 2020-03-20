@@ -1,10 +1,13 @@
 import React from "react";
 import { Button, Table } from "reactstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { deleteSmurf } from "../actions";
 
 function SmurfList(props) {
   const { history } = props;
   const { smurfs } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   if (!smurfs.length) return <div>Loading...</div>;
 
@@ -36,7 +39,11 @@ function SmurfList(props) {
               <td>{smurf.age}</td>
               <td>{smurf.height}</td>
               <td>
-                <Button size="sm" color="danger">
+                <Button
+                  size="sm"
+                  color="danger"
+                  onClick={() => dispatch(deleteSmurf(smurf.id))}
+                >
                   delete
                 </Button>
                 <Button size="sm">edit</Button>
